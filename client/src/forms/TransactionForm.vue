@@ -7,8 +7,8 @@
             >
             <select class="form-control form-control-alternative" v-model="formRecord.customer_id" @change="select($event)" >
                 <option value="">Pilih Pelanggan</option>
-                <option v-for="customer in customers" :key="customer.data.id" :value="customer.data.id">
-                    {{ customer.data.code }} - {{ customer.data.name }}
+                <option v-for="customer in customers" :key="customer.id" :value="customer.id">
+                    {{ customer.code }} - {{ customer.name }}
                 </option>
             </select>
             </base-input>

@@ -5,7 +5,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="Harga Permeter"
                         type="gradient-red"
-                        :sub-title="setting.harga"
+                        :sub-title="harga"
                         icon="ni ni-active-40"
                         class="mb-4 mb-xl-0"
                     >
@@ -18,7 +18,7 @@
                         icon="ni ni-active-40"
                         class="mb-4 mb-xl-0"
                     >
-                    <img :src="getImage('img/logo',setting.logo)" width="100" height="100">
+                    <img :src="getImage('img/logo',setting.logo)" width="100">
                     </stats-card>
                 </div>
             </div>
@@ -33,8 +33,7 @@
                 </form>
                 <template slot="footer">
                     <base-button type="primary" :disabled="isDisabled" @click="submitForm()">Save changes</base-button>
-                    <base-button type="link" class="ml-auto" @click="$store.commit('setModals')">Close
-                    </base-button>
+                    <base-button type="link" class="ml-auto" @click="$store.commit('setModals')">Close</base-button>
                 </template>
             </modal>
         </div>
@@ -65,7 +64,11 @@ export default {
     computed: {
         ...mapGetters({
             setting: 'setting'
-        })
+        }),
+
+        harga() {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(this.setting.harga)
+        }
     },
     methods: {
         editForm() {

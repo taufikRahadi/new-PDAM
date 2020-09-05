@@ -39,12 +39,12 @@
             <template slot="table-rows">
                 <tr v-for="(user, index) in users" :key="user.id">
                     <td>{{ index + 1 }}</td>
-                    <td class="text-capitalize">{{ user.data.name }}</td>
-                    <td>{{ user.data.email }}</td>
-                    <td>{{ user.data.role }}</td>
-                    <td>{{ user.data.address }}</td>
-                    <td>{{ user.data.phone }}</td>
-                    <td>{{ user.data.created_at }}</td>
+                    <td class="text-capitalize">{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.created_at }}</td>
                     <td>
                         <action-button 
                             :formRecord="form"

@@ -2,15 +2,15 @@
     <div>
         <base-input alternative=""
             label="Nama Pengeluaran"
-            placeholder="Nama Pengeluaran"
+            placeholder="Harga"
             input-classes="form-control-alternative"
             v-model="formRecord.harga"
         />
         <!-- todo buat component untuk get img -->
-        <div>
-            <img :src=" 'http://pdam.test/img/logo/' + formRecord.logo" alt="img_edit" width="100" height="100">
+        <!-- <div>
+            <img :src=" 'http://localhost:8000/img/logo/' + formRecord.logo" alt="img_edit" width="100" height="100">
             <br><br>
-        </div>
+        </div> -->
         <base-input label="">
             <input type="file" class="form-control form-control-alternative" name="" id="" @change="selected" >
         </base-input>

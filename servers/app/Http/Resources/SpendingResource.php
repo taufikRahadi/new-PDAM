@@ -14,10 +14,6 @@ class SpendingResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'status' => 'success',
-            'message' => 'Spending',
-            'data' => parent::toArray($request)
-        ];
+        return parent::toArray($request);
     }
 }

@@ -29,7 +29,7 @@ const store = new Vuex.Store({
         setting: [],
         modals: false,
         isEditing: false,
-        token: localStorage.getItem('access_token'),
+        token: localStorage.getItem('access_token') | null,
     },
 
     mutations: {
@@ -73,25 +73,21 @@ const store = new Vuex.Store({
     actions: {
         async fetchData(context, args) {
             try {
-                const data = await axios.get(getUrlName(args))
-                context.commit(getMutationName(args), data.data.data)
-            } catch (error) {
-                console.error(error.message)
-                throw new Error(error.message)
+                const { data } = await axios.get(getUrlName(args))
+                context.commit(getMutationName(args), data.data)
+            } catch ({ response }) {
+                throw new Error(response.data.message)
             }
         },
 
-        searchData(context, args) {
-            return new Promise((resolve, reject) => {
-                axios.get(getUrlName(args.modelName) + '?q=' + args.query)
-                    .then(res => {
-                        context.commit(getMutationName(args.modelName), res.data.data)
-                        resolve(res)
-                    })
-                    .catch(err => {
-                        reject(err)
-                    })
-            })      
+        async searchData(context, args) {
+            try {
+                const { data } = await axios.get(getUrlName(args.modelName) + '?q=' + args.query)
+                context.commit(getMutationName(args.modelName), data.data)
+            } catch ({ response }) {
+                console.log(response)
+                throw new Error(response)
+            }
         },
         // todo buat component
         filterDate(context, args) {
@@ -138,7 +134,7 @@ const store = new Vuex.Store({
 
         async login(context , args) {
             try {
-                const data = await args.post('http://127.0.0.1:8000/api/login')
+                const data = await args.post('http://127.0.0.1:8000/api/v1/login')
                 const token = data.data.access_token
                 localStorage.setItem('access_token', token)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
@@ -161,11 +157,14 @@ const store = new Vuex.Store({
             }
         },
 
-        async getCurrentUser(context) {
-            await axios.get('user')
-                .then(res => {
-                    context.commit('setCurrentUser', res.data)
-                })
+        async getCurrentUser({ commit }) {
+            try {
+                const { data } = await axios.get('user')
+                commit('setCurrentUser', data)
+            } catch ({ response }) {
+                console.error(response)
+                throw new Error(response.data.message)
+            }
         }
     },
 
@@ -177,18 +176,17 @@ const store = new Vuex.Store({
         spends: state => state.spends,
         setting: state => state.setting,
         isLoggedIn: state => {
-            return state.token !=null && state.token != "null"
-            
+            return state.token !=null && state.token != "null"  
         },
         isEditing: state => state.isEditing,
         adminUsers(state) {
-            return state.users.filter(user => user.data.role.match("Admin"))
+            return state.users.filter(user => user.role.match("Admin"))
         },
         pengelolaUsers(state) {
-            return state.users.filter(user => user.data.role.match("Pengelola"))
+            return state.users.filter(user => user.role.match("Pengelola"))
         },
         pegawaiUsers(state) {
-            return state.users.filter(user => user.data.role.match("Pegawai"))
+            return state.users.filter(user => user.role.match("Pegawai"))
         }
     }
 })

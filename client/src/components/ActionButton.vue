@@ -24,7 +24,7 @@ export default {
     computed: {
         buttonState() {
             if(this.modelName === 'users') {
-                if(this.record.data.id === this.$store.state.currentUser.id) {
+                if(this.record.id === this.$store.state.currentUser.id) {
                     return false
                 }
             }
@@ -37,7 +37,7 @@ export default {
         editButtonAction() {
             this.$store.commit('setIsEditing', true)
             this.$store.commit('setModals')
-            this.formRecord.fill(this.record.data)
+            this.formRecord.fill(this.record)
         },
 
         deleteButtonAction() {
@@ -53,7 +53,7 @@ export default {
                 if (result.value) {
                     this.$store.dispatch('destroyData', {
                         modelName: this.modelName,
-                        id: this.record.data.id
+                        id: this.record.id
                     })
                         .then(() => {
                             Swal.fire(

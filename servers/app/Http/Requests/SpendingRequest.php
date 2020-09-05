@@ -27,7 +27,7 @@ class SpendingRequest extends FormRequest
             'name' => 'required',
             'total' => 'required',
             'information' => 'required',
-            'img' => 'required|isImage'
+            // 'img' => 'required|isImage'
         ];
     }
 

@@ -4,7 +4,7 @@ const Helper = {
     install(vue) {
         // vue.prototype.appName = 
         vue.prototype.getImage = function (location, name) {
-            return process.env.VUE_APP_URL + '/' + location + '/' + name
+            return process.env.VUE_APP_IMAGE_URL + '/' + location + '/' + name
         }
     }
 }

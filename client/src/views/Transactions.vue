@@ -36,20 +36,20 @@
                     <td>
                         {{ index + 1 }}
                     </td>
-                    <td>{{ transaction.data.code }}</td>
-                    <td>{{ transaction.data.customer.code }} &ndash; {{ transaction.data.customer.name }}</td>
-                    <td>{{ transaction.data.user.name }}</td>
-                    <td>{{ transaction.data.indicator_total }}</td>
-                    <td>{{ transaction.data.price | currency }}</td>
+                    <td>{{ transaction.code }}</td>
+                    <td>{{ transaction.customer.code }} &ndash; {{ transaction.customer.name }}</td>
+                    <td>{{ transaction.user.name }}</td>
+                    <td>{{ transaction.indicator_total }}</td>
+                    <td>{{ transaction.price | currency }}</td>
                     <td>
-                        <badge tag="a" href="#" v-if="transaction.data.status === 'Dibayar'" type="success">
-                            {{ transaction.data.status }}
+                        <badge tag="a" href="#" v-if="transaction.status === 'Dibayar'" type="success">
+                            {{ transaction.status }}
                         </badge>
                         <badge tag="a" href="#" v-else type="warning">
-                            {{ transaction.data.status }}
+                            {{ transaction.status }}
                         </badge>
                     </td>
-                    <td>{{ transaction.data.created_at }}</td>
+                    <td>{{ transaction.created_at }}</td>
                     <td>
                         <action-button
                             :formRecord="form"
@@ -96,18 +96,14 @@ export default {
             'transactions'
         ]),
         totalSpendThisMonth(){
-            var hasil = 0;
-            this.transactions.forEach(element => {
-                hasil +=element.data.price
-            });
-            return 'Rp '+hasil.toLocaleString('id-ID')
+            let hasil = 0
+            this.transactions.forEach(val => {
+                hasil += val.price
+            })
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(hasil)
         },
         sumTotalBayar(){
-            let total = this.transactions.filter(e => {
-                // var [year, month] = e.data.created_at.split('-')
-                // return (currentMonth === +month) && (currentYear == year)
-                return e.data.status == 'Belum Dibayar'
-            });
+            let total = this.transactions.filter(e => e.status === 'Belum Dibayar');
 
             return total.length
         }
@@ -116,6 +112,9 @@ export default {
         flatPickr
     },
     methods: {
+        async getTotal(arr) {
+            return await arr.reduce((a, b) => a.price + b.price)
+        },
         filterDate(selectedDates, dateStr) {
           this.$store.dispatch('filterDate', {
               modelName: 'filterDate',

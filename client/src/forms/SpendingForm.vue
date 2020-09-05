@@ -24,7 +24,7 @@
         />
         <!-- todo buat component untuk get img -->
         <div v-if="isEditing==true" >
-            <img :src=" 'http://pdam.test/img/original/' + formRecord.img" alt="img_edit" width="100" height="100">
+            <img :src=" 'http://localhost:8000/img/original/' + formRecord.img" alt="img_edit" height="100">
             <br><br>
         </div>
         <base-input label="">

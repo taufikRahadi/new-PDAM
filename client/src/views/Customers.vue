@@ -21,19 +21,19 @@
                         {{ index + 1 }}
                     </td>
                     <td>
-                        {{ customer.data.code}}
+                        {{ customer.code}}
                     </td>
                     <td>
-                        {{ customer.data.name}}
+                        {{ customer.name}}
                     </td>
                     <td>
-                        {{ customer.data.phone}}
+                        {{ customer.phone}}
                     </td>
                     <td>
-                        {{ customer.data.user.name}}
+                        {{ customer.user.name}}
                     </td>
                     <td>
-                        {{customer.data.address}}
+                        {{customer.address}}
                     </td>
                     <td>
                         <action-button 

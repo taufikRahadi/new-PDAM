@@ -20,9 +20,9 @@ class SpendingController extends Controller
             'name' => 'required',
             'total' => 'required',
             'information' => 'required',
-            'img' => 'required|base64image'
+            'img' => 'required'
         ]);
-      
+
         DB::beginTransaction();
         try {
             $rand = rand();
@@ -171,11 +171,11 @@ class SpendingController extends Controller
             }
         }
         catch(\Exception $e) {
-            
+
             $message = $e->getMessage();
             $this->deleteImg('/img/original/', $spending->img);
             $this->deleteImg('/img/thumbnail/', $spending->thumbnail);
-            
+
         }
         return Response()->json([
             'status' => $status,
