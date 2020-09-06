@@ -18,6 +18,8 @@ Vue.filter('currency', (money) => {
   return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(money)
 })
 
+Vue.filter('capitalize', val => val.toString().split(' ').map(str => str.charAt(0).toUpperCase() + str.slice(1)).join(' '))
+
 Vue.config.productionTip = false
 
 new Vue({
